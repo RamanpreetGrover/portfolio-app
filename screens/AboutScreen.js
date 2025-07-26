@@ -1,17 +1,31 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native'; // Import Button component
-import { useNavigation } from '@react-navigation/native'; // Hook to navigate
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../context/ThemeContext'; //  Import theme context
 
 const AboutScreen = () => {
-  const navigation = useNavigation(); // Get navigation object
+  const navigation = useNavigation();
+  const { theme, toggleTheme } = useTheme(); // Get theme and toggle function
+  const isDark = theme === 'dark';
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Ramanpreet Grover</Text>
-      <Text style={styles.text}>Welcome to my portfolio app!</Text>
-      <Text style={styles.text}>I'm a developer passionate about React Native.</Text>
+    <View style={[styles.container, { backgroundColor: isDark ? '#000' : '#fff' }]}>
+      {/* Title with dynamic text color */}
+      <Text style={[styles.title, { color: isDark ? '#fff' : '#000' }]}>
+        Ramanpreet Grover
+      </Text>
 
-      {/* Navigation buttons */}
+      <Text style={[styles.text, { color: isDark ? '#ccc' : '#333' }]}>
+        Welcome to my portfolio app!
+      </Text>
+
+      {/* Theme Toggle Button */}
+      <Button
+        title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
+        onPress={toggleTheme}
+      />
+
+      {/* Navigation Buttons */}
       <View style={styles.buttonContainer}>
         <Button title="Go to Gallery" onPress={() => navigation.navigate('Gallery')} />
         <Button title="Contact Me" onPress={() => navigation.navigate('Contact')} />
@@ -23,9 +37,10 @@ const AboutScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    padding: 25,
     justifyContent: 'center',
-    padding: 20,
+    alignItems: 'center',
+    gap: 15,
   },
   title: {
     fontSize: 28,
@@ -35,7 +50,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   buttonContainer: {
     marginTop: 30,

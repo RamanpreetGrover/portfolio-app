@@ -32,6 +32,9 @@
     },
     "extra": {
       "env": "development"
-    }
+    },
+    "plugins": [
+      "expo-mail-composer"
+    ]
   }
 }
