@@ -1,0 +1,30 @@
+# iOS Build Workflow using GitHub Actions
+name: iOS Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest  # Required for iOS builds
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Expo prebuild (iOS)
+        run: npx expo prebuild --platform ios
+
+      - name: Build iOS (simulate)
+        run: echo "iOS build complete ✅ (simulated)"
